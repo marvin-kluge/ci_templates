@@ -6,12 +6,28 @@ on:
       python-version:
         required: true
         type: string
+        default: "3.10"
+      use-uv:
+        required: false
+        type: boolean
+        default: false
+      install-requirements:
+        required: false
+        type: boolean
+        default: true
+      extra-requirements:
+        required: false
+        type: string
+        default: ""
 
 jobs:
   build:
     uses: "marvin-kluge/ci_templates/.github/workflows/install.yml@main"
     with:
       python-version: ${{ inputs.python-version }}
+      use-uv: ${{ inputs.use-uv }}
+      install-requirements: ${{ inputs.install-requirements }}
+      extra-requirements: ${{ inputs.extra-requirements }}
 
   build-package:
     runs-on: ubuntu-latest
