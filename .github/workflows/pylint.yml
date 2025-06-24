@@ -41,7 +41,7 @@ jobs:
         id: pylint-input
         run: |
           INPUT="${{ inputs.pylint-input }}"
-          if [ -n "$INPUT" != "" ]; then
+          if [ -n "$INPUT" ]; then
             echo "Using user-defined source dir: $INPUT"
           elif [ -d "$(basename $GITHUB_REPOSITORY)" ]; then
             INPUT=$(basename $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')
