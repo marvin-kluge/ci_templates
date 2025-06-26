@@ -21,7 +21,7 @@ on:
         default: ""
 
 jobs:
-  install:
+  install_repository:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
