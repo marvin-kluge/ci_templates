@@ -3,15 +3,15 @@ name: Pylint Code Quality
 on:
   workflow_call:
     inputs:
-      python-version:
+      PYTHON_VERSION:
         required: true
         type: string
         default: "3.10"
-      pylint-input:
+      PYTHON_PACKAGE_NAME:
         required: false
         type: string
     outputs:
-      pylint-score:
+      PYLINT_SCORE:
         description: "Pylint score"
         value: ${{ jobs.pylint.outputs.score }}
 
@@ -29,7 +29,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ inputs.python-version }}
+          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
 
       - name: Upgrade Pip
         run: pip install --upgrade pip
@@ -40,7 +40,7 @@ jobs:
       - name: Determine pylint input
         id: pylint-input
         run: |
-          INPUT="${{ inputs.pylint-input }}"
+          INPUT="${{ inputs.PYTHON_PACKAGE_NAME }}"
           if [ -n "$INPUT" ]; then
             echo "Using user-defined source dir: $INPUT"
           elif [ -d "$(basename $GITHUB_REPOSITORY)" ]; then

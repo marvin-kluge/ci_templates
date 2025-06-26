@@ -3,19 +3,19 @@ name: Install Local Repository
 on:
   workflow_call:
     inputs:
-      python-version:
+      PYTHON_VERSION:
         required: true
         type: string
         default: "3.7"
-      use-uv:
+      USE_UV:
         required: false
         type: boolean
         default: false
-      install-requirements:
+      INSTALL_REQUIREMENTS:
         required: false
         type: boolean
         default: true
-      extra-requirements:
+      EXTRA_REQUIREMENTS:
         required: false
         type: string
         default: ""
@@ -30,7 +30,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ inputs.python-version }}
+          python-version: ${{ inputs.PYTHON_VERSION }}
 
       - name: Upgrade Pip
         run: pip install --upgrade pip
@@ -38,7 +38,7 @@ jobs:
       - name: Install UV or Pip
         id: install-method
         run: |
-          if [[ "${{ inputs.use-uv }}" == "true" ]]; then
+          if [[ "${{ inputs.USE_UV }}" == "true" ]]; then
             echo "Installing and setting up uv"
             pip install uv
             echo "install-cmd=uv pip install --system" >> $GITHUB_OUTPUT
@@ -48,11 +48,11 @@ jobs:
           fi
 
       - name: Install Requirements
-        if: inputs.install-requirements == true && hashFiles('requirements.txt') != ''
+        if: inputs.INSTALL_REQUIREMENTS == true && hashFiles('requirements.txt') != ''
         run: |
           ${{ steps.install-method.outputs.install-cmd }} -r requirements.txt
 
       - name: Install Project
         if: hashFiles('setup.py', 'pyproject.toml') != ''
         run: |
-          ${{ steps.install-method.outputs.install-cmd }} -e .${{ inputs.extra-requirements }}
+          ${{ steps.install-method.outputs.install-cmd }} -e .${{ inputs.EXTRA_REQUIREMENTS }}
