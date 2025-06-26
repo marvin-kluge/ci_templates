@@ -66,7 +66,9 @@ jobs:
 
       - name: Generate badge
         run: |
-          anybadge --value=${{ steps.extract-issues.outputs.count }} --file=ruff/ruff.svg ruff
+          anybadge --label=ruff --value=${{ steps.extract-issues.outputs.count }} \
+          --file=ruff/ruff.svg \
+          0=green 10=yellow 50=orange 100=red
 
       - name: Generate HTML report
         run: |
