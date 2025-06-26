@@ -42,31 +42,12 @@ jobs:
         with:
           python-version: ${{ inputs.PYTHON_VERSION }}
 
-      - name: Upgrade Pip
-        run: pip install --upgrade pip
-
-      - name: Install UV or Pip
-        id: install-method
-        run: |
-          if [[ "${{ inputs.USE_UV }}" == "true" ]]; then
-            echo "Installing and setting up uv"
-            pip install uv
-            echo "install-cmd=uv pip install --system" >> $GITHUB_OUTPUT
-          else
-            echo "Using standard pip"
-            echo "install-cmd=pip install" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Install Requirements
-        if: inputs.INSTALL_REQUIREMENTS == true && hashFiles('requirements.txt') != ''
-        run: |
-          ${{ steps.install-method.outputs.install-cmd }} -r requirements.txt
-
-      - name: Install Project
-        if: hashFiles('setup.py', 'pyproject.toml') != ''
-        run: |
-          ${{ steps.install-method.outputs.install-cmd }} -e .${{ inputs.EXTRA_REQUIREMENTS }}
-
+      - name: Install project
+        uses: marvin-kluge/ci_templates/.github/actions/install@main
+        with:
+          use-uv: ${{ inputs.USE_UV }}
+          install-requirements: ${{inputs.INSTALL_REQUIREMENTS}}
+          extra-requirements: ${{inputs.EXTRA_REQUIREMENTS}}
       - name: Install sphinx dependencies
         run: |
           pip install sphinx==6.2.1 anybadge m2r2 sphinx-material autodoc_pydantic sphinx-rtd-theme
