@@ -16,7 +16,7 @@ on:
         value: ${{ jobs.ruff.outputs.issues }}
 
 jobs:
-  code-quality:
+  ruff:
     runs-on: ubuntu-latest
 
     outputs:

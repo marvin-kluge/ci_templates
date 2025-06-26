@@ -16,7 +16,7 @@ on:
         value: ${{ jobs.pylint.outputs.score }}
 
 jobs:
-  code-quality:
+  pylint:
     runs-on: ubuntu-latest
 
     outputs:

@@ -58,3 +58,10 @@ jobs:
     with:
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
       PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
+
+  sphinx_doc:
+    if: ${{inputs.USE_RUFF}}
+    uses: "marvin-kluge/ci_templates/.github/workflows/sphinx_doc.yml@main"
+    with:
+      PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
