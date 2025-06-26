@@ -27,6 +27,10 @@ on:
         required: false
         type: string
         default: ""
+      PYTHON_PACKAGE_NAME:
+        required: false
+        type: string
+        default: ""
 
 jobs:
   install:
