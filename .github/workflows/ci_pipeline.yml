@@ -43,7 +43,6 @@ jobs:
     if: ${{inputs.BUILD_PACKAGE}}
     uses: "marvin-kluge/ci_templates/.github/workflows/build.yml@main"
     with:
-      BUILD_PACKAGE: ${{inputs.BUILD_PACKAGE}}
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
       USE_UV: ${{inputs.USE_UV}}
       INSTALL_REQUIREMENTS: ${{inputs.INSTALL_REQUIREMENTS}}
