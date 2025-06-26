@@ -3,19 +3,19 @@ name: Build Python Package
 on:
   workflow_call:
     inputs:
-      python-version:
+      PYTHON_VERSION:
         required: true
         type: string
         default: "3.10"
-      use-uv:
+      USE_UV:
         required: false
         type: boolean
         default: false
-      install-requirements:
+      INSTALL_REQUIREMENTS:
         required: false
         type: boolean
         default: true
-      extra-requirements:
+      EXTRA_REQUIREMENTS:
         required: false
         type: string
         default: ""
@@ -24,10 +24,10 @@ jobs:
   build:
     uses: "marvin-kluge/ci_templates/.github/workflows/install.yml@main"
     with:
-      python-version: ${{ inputs.python-version }}
-      use-uv: ${{ inputs.use-uv }}
-      install-requirements: ${{ inputs.install-requirements }}
-      extra-requirements: ${{ inputs.extra-requirements }}
+      PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
+      USE_UV: ${{ inputs.USE_UV }}
+      INSTALL_REQUIREMENTS: ${{ inputs.INSTALL_REQUIREMENTS }}
+      EXTRA_REQUIREMENTS: ${{ inputs.EXTRA_REQUIREMENTS }}
 
   build-package:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ inputs.python-version }}
+          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
 
       - name: Install build and anybadge
         run: |
