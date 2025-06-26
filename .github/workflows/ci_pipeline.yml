@@ -13,6 +13,10 @@ on:
         required: false
         type: boolean
         default: false
+      GENERATE_DOCUMENTATION:
+        required: false
+        type: boolean
+        default: false
       PYTHON_VERSION:
         required: true
         type: string
@@ -60,7 +64,7 @@ jobs:
       PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
 
   sphinx_doc:
-    if: ${{inputs.USE_RUFF}}
+    if: ${{inputs.GENERATE_DOCUMENTATION}}
     uses: "marvin-kluge/ci_templates/.github/workflows/sphinx_doc.yml@main"
     with:
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
