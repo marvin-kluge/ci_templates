@@ -16,7 +16,16 @@ on:
         value: ${{ jobs.docs.outputs.success }}
 
 jobs:
+  install:
+    uses: "marvin-kluge/ci_templates/.github/workflows/install.yml@main"
+    with:
+      PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
+      USE_UV: ${{ inputs.USE_UV }}
+      INSTALL_REQUIREMENTS: ${{ inputs.INSTALL_REQUIREMENTS }}
+      EXTRA_REQUIREMENTS: ${{ inputs.EXTRA_REQUIREMENTS }}
+
   docs:
+    needs: install
     runs-on: ubuntu-latest
 
     outputs:
