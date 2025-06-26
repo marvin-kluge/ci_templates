@@ -17,6 +17,10 @@ on:
         required: true
         type: string
         default: "3.7"
+      PYTHON_PACKAGE_NAME:
+        required: false
+        type: string
+        default: ""
       USE_UV:
         required: false
         type: boolean
@@ -35,18 +39,22 @@ jobs:
     if: ${{inputs.BUILD_PACKAGE}}
     uses: "marvin-kluge/ci_templates/.github/workflows/build.yml@main"
     with:
-      PYTHON_VERSION: "3.11"
+      PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      USE_UV: ${{inputs.USE_UV}}
+      INSTALL_REQUIREMENTS: ${{inputs.INSTALL_REQUIREMENTS}}
+      EXTRA_REQUIREMENTS: ${{inputs.EXTRA_REQUIREMENTS}}
+
 
   pylint:
     if: ${{inputs.USE_PYLINT}}
     uses: "marvin-kluge/ci_templates/.github/workflows/pylint.yml@main"
     with:
-      PYTHON_VERSION: "3.11"
-      PYTHON_PACKAGE_NAME: "teaser"
+      PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
 
   ruff:
     if: ${{inputs.USE_RUFF}}
     uses: "marvin-kluge/ci_templates/.github/workflows/ruff.yml@main"
     with:
-      PYTHON_VERSION: "3.11"
-      PYTHON_PACKAGE_NAME: "teaser"
+      PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
