@@ -1,0 +1,58 @@
+name: Install Local Repository
+
+on:
+  workflow_call:
+    inputs:
+      PYTHON_VERSION:
+        required: true
+        type: string
+        default: "3.7"
+      USE_UV:
+        required: false
+        type: boolean
+        default: false
+      INSTALL_REQUIREMENTS:
+        required: false
+        type: boolean
+        default: true
+      EXTRA_REQUIREMENTS:
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.PYTHON_VERSION }}
+
+      - name: Upgrade Pip
+        run: pip install --upgrade pip
+
+      - name: Install UV or Pip
+        id: install-method
+        run: |
+          if [[ "${{ inputs.USE_UV }}" == "true" ]]; then
+            echo "Installing and setting up uv"
+            pip install uv
+            echo "install-cmd=uv pip install --system" >> $GITHUB_OUTPUT
+          else
+            echo "Using standard pip"
+            echo "install-cmd=pip install" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install Requirements
+        if: inputs.INSTALL_REQUIREMENTS == true && hashFiles('requirements.txt') != ''
+        run: |
+          ${{ steps.install-method.outputs.install-cmd }} -r requirements.txt
+
+      - name: Install Project
+        if: hashFiles('setup.py', 'pyproject.toml') != ''
+        run: |
+          ${{ steps.install-method.outputs.install-cmd }} -e .${{ inputs.EXTRA_REQUIREMENTS }}
