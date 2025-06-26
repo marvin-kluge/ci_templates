@@ -40,9 +40,9 @@ on:
 
 jobs:
   build:
+    if: ${{inputs.BUILD_PACKAGE}}
     uses: "marvin-kluge/ci_templates/.github/workflows/build.yml@main"
     with:
-      GENERATE_DOCUMENTATION: ${{inputs.GENERATE_DOCUMENTATION}}
       BUILD_PACKAGE: ${{inputs.BUILD_PACKAGE}}
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
       USE_UV: ${{inputs.USE_UV}}
@@ -62,4 +62,14 @@ jobs:
     uses: "marvin-kluge/ci_templates/.github/workflows/ruff.yml@main"
     with:
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
+
+  sphinx_doc:
+    if: ${{inputs.GENERATE_DOCUMENTATION}}
+    uses: "marvin-kluge/ci_templates/.github/workflows/sphinx_doc.yml@main"
+    with:
+      PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
+      USE_UV: ${{inputs.USE_UV}}
+      INSTALL_REQUIREMENTS: ${{inputs.INSTALL_REQUIREMENTS}}
+      EXTRA_REQUIREMENTS: ${{inputs.EXTRA_REQUIREMENTS}}
       PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
