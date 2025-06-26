@@ -34,19 +34,19 @@ jobs:
   build:
     if: ${{inputs.BUILD_PACKAGE}}
     uses: "marvin-kluge/ci_templates/.github/workflows/build.yml@main"
-#    uses: "marvin-kluge/ci_templates/.github/workflows/utils/build.yml@main"
     with:
       PYTHON_VERSION: "3.11"
 
   pylint:
     if: ${{inputs.USE_PYLINT}}
-    uses: "marvin-kluge/ci_templates/.github/workflows/code_quality/pylint.yml@main"
+    uses: "marvin-kluge/ci_templates/.github/workflows/pylint.yml@main"
     with:
       PYTHON_VERSION: "3.11"
       PYTHON_PACKAGE_NAME: "teaser"
-#  ruff:
-#    if: ${{inputs.USE_RUFF}}
-#    uses: "marvin-kluge/ci_templates/.github/workflows/code_quality/ruff.yml@main"
-#    with:
-#      PYTHON_VERSION: "3.11"
-#      PYTHON_PACKAGE_NAME: "teaser"
+
+  ruff:
+    if: ${{inputs.USE_RUFF}}
+    uses: "marvin-kluge/ci_templates/.github/workflows/ruff.yml@main"
+    with:
+      PYTHON_VERSION: "3.11"
+      PYTHON_PACKAGE_NAME: "teaser"
