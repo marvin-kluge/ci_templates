@@ -45,7 +45,7 @@ jobs:
       PYTHON_VERSION: ${{inputs.PYTHON_VERSION}}
       PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
 
-  build-package:
+  package:
     if: ${{inputs.BUILD_PACKAGE}}
     runs-on: ubuntu-latest
     needs: install
