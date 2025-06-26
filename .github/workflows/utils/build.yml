@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    uses: "marvin-kluge/ci_templates/.github/workflows/install.yml@main"
+    uses: "marvin-kluge/ci_templates/.github/workflows/utils/install.yml@main"
     with:
       PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
       USE_UV: ${{ inputs.USE_UV }}

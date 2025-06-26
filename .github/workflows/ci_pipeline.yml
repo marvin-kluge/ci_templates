@@ -1,0 +1,43 @@
+on:
+  workflow_call:
+    inputs:
+      USE_PYLINT:
+        required: false
+        type: boolean
+        default: false
+      USE_RUFF:
+        required: false
+        type: boolean
+        default: false
+      BUILD_PACKAGE:
+        required: false
+        type: boolean
+        default: false
+      PYTHON_VERSION:
+        required: true
+        type: string
+        default: "3.7"
+      USE_UV:
+        required: false
+        type: boolean
+        default: false
+      INSTALL_REQUIREMENTS:
+        required: false
+        type: boolean
+        default: true
+      EXTRA_REQUIREMENTS:
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  build:
+    uses: "marvin-kluge/ci_templates/.github/workflows/utils/build.yml@main"
+    with:
+      PYTHON_VERSION: "3.11"
+
+  code-quality:
+    uses: "marvin-kluge/ci_templates/.github/workflows/code_quality/pylint.yml@main"
+    with:
+      PYTHON_VERSION: "3.11"
+      PYTHON_PACKAGE_NAME: "teaser"
