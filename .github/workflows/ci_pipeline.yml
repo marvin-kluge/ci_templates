@@ -48,7 +48,7 @@ jobs:
       USE_UV: ${{inputs.USE_UV}}
       INSTALL_REQUIREMENTS: ${{inputs.INSTALL_REQUIREMENTS}}
       EXTRA_REQUIREMENTS: ${{inputs.EXTRA_REQUIREMENTS}}
-
+      PYTHON_PACKAGE_NAME: ${{inputs.PYTHON_PACKAGE_NAME}}
 
   pylint:
     if: ${{inputs.USE_PYLINT}}
